@@ -1,28 +1,17 @@
 const express=require("express");
 
 const app=express();
-app.get("/user",(req,res)=>{
+
+
+app.get("/user/:userId/:name/:password",(req,res)=>{
+    console.log(req.params);
+    //http://localhost:3000/user?userId=101&password=testing
+    //console.log(req.query);
     res.send({firstname:"vansh",lastname:"singhal"});
 
 });
 
-app.post("/user",(req,res)=>{
-    console.log("data save to db");
-    res.send("data succesfully save to db");
-
-});
-
-app.delete("/user",(req,res)=>{
-    res.send("delete data form db");
-
-});
-
-
-
-app.use("/test",(req,res)=>{
-    res.send("Hello from the test server");
-
-});
+//app.get("/user/:userId/:name/:password",(req,res)=>{console.log(req.params);});
 
 
 app.listen(3000,()=>{

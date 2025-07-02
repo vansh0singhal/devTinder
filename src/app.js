@@ -2,17 +2,24 @@ const express=require("express");
 
 const app=express();
 
-
-app.get("/user/:userId/:name/:password",(req,res)=>{
-    console.log(req.params);
-    //http://localhost:3000/user?userId=101&password=testing
-    //console.log(req.query);
-    res.send({firstname:"vansh",lastname:"singhal"});
-
-});
-
-//app.get("/user/:userId/:name/:password",(req,res)=>{console.log(req.params);});
-
+app.use("/user",
+    (req,res,next)=>{
+        console.log("handling the user route 1");
+        next();
+    },
+    (req,res,next)=>{
+        console.log("handling the user route 2");
+        next();
+    },
+    (req,res,next)=>{
+        console.log("handling the user route 3");
+        next();
+    },
+    (req,res,next)=>{
+        console.log("handling the user route 4");
+        next();
+    }
+);
 
 app.listen(3000,()=>{
     console.log("Server is listening on the port 3000");

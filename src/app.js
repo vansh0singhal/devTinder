@@ -1,29 +1,35 @@
 const express=require("express");
-const {adminAuth,userAuth}=require("./middlewares/auth.js")
-
-
 const app=express();
 
-app.use("/admin",adminAuth);
-
-
-app.post("/user/login",(req,res)=>{
-    res.send("User Logged In");
-});
-app.get("/user/data",userAuth,(req,res)=>{
-    res.send("user data sent")
-
+app.use("/",(err,req,res,next)=>{
+    if(err){
+        res.status(500).send("Something went wrong");
+    }
 });
 
+app.get("/getUserData",(req,res)=>{
+    // try{
+    //      
+    // 
+    //connection of db logic
+    throw new Error("Random error");
+    res.send("user data sent");
 
-app.get("/admin/getAllData",(req,res)=>{
-    res.send("get all data");
+    // }catch(err){
+    //     res.status(500).send("Some error occur with contact team");
+
+    // }
+   
 });
-app.get("/admin/deleteUser",(req,res)=>{
-    res.send("deleted a user");   
+
+app.use("/",(err,req,res,next)=>{
+    if(err){
+        res.status(500).send("Something went wrong");
+    }
 });
+
+
+
 app.listen(3000,()=>{
-    console.log("Server is listening on the port 3000");
-});
-
-
+    console.log("Server is listen on the port 3000");
+})

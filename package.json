@@ -15,7 +15,8 @@
   "author": "Vansh Singhal",
   "license": "ISC",
   "dependencies": {
-   "express": "^4.19.2",
-    "mongoose": "^8.16.2"
+    "express": "^4.19.2",
+    "mongoose": "^8.16.2",
+    "validator": "^13.15.15"
   }
 }

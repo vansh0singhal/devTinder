@@ -1,4 +1,5 @@
 const mongoose=require("mongoose");
+const validator=require("validator");
 
 const userSchema=new mongoose.Schema({
     firstName: {
@@ -16,10 +17,20 @@ const userSchema=new mongoose.Schema({
         required:true,
         unique:true,
         trim:true,
+        validate(value){
+            if(!validator.isEmail(value)){
+                throw new Error("Invalid email address"+value);
+            }
+        }
     },
     password:{
         type:String,
         required:true,
+        validate(value){
+            if(!validator.isStrongPassword(value)){
+                throw new Error("Enter a strong password"+value);
+            }
+        }
     },
     age:{
         type:Number,
@@ -36,6 +47,11 @@ const userSchema=new mongoose.Schema({
     photoUrl:{
         type:String,
         default:"https://thumbs.dreamstime.com/b/anonymous-profile-illustration-person-grey-silhouette-figure-white-collar-black-sweater-hair-avatar-default-profile-386973338.jpg",
+        validate(value){
+            if(!validator.isURL(value)){
+                throw new Error("url is not coorect"+value);
+            }
+        }
     },
     about:{
         type:String,

@@ -15,13 +15,6 @@ app.get("/user",async (req,res)=>{
         }else{
             res.send(users);
         }
-        // const users=await User.find({emailId:userEmail});
-        // if(users.length===0){
-        //     res.status(404).send("User not found");
-
-        // }else{
-        //     res.send(users);
-        // }
     }
     catch(err){
         res.status(400).send("something went wrong");
@@ -73,9 +66,9 @@ app.patch("/user/:userId",async(req,res)=>{
     if(!isUpdateAllowed){
         throw new Error("Update not allowed");
     }
-    if(data?.skills.length>10){
-        throw new Error("skills can not be more than 10");
-    }
+    // if(data?.skills.length>10){
+    //     throw new Error("skills can not be more than 10");
+    // }
     const user=await User.findByIdAndUpdate(userId,data,{
         returnDocument:"after",
         runValidators:true,

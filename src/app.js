@@ -1,6 +1,8 @@
 const express=require("express");
 const {connectDB}=require("./config/database.js");
 const User=require("./models/user.js");
+const{validateSignupDate}=require("./utils/validation.js")
+const bcrypt=require("bcrypt");
 const app=express();
 
 app.use(express.json());
@@ -22,13 +24,54 @@ app.get("/user",async (req,res)=>{
 });
 
 app.post("/signup",async (req,res)=>{
-    const user=new User(req.body);
+
+   
     try{
+        //validate data
+        validateSignupDate(req);
+
+        //encrypt the password
+        const {firstName,lastName,emailId,password}=req.body;
+        const passwordHash= await bcrypt.hash(password,10);
+
+        console.log(passwordHash);
+
+        
+        const user=new User({
+            firstName,
+            lastName,
+            emailId,
+            password:passwordHash,
+        });
         await user.save();
         res.send("user data is succesfully added to the database");
     }catch(err){
-        res.status(400).send("error while adding user"+ err.message);
+        res.status(400).send("ERROR : "+ err.message);
     } 
+
+});
+
+//login api
+
+app.post("/login",async(req,res)=>{
+    try{
+        const{emailId,password}=req.body;
+
+        const user=await User.findOne({emailId:emailId});
+        if(!user){
+            throw new Error("Invalid Cridentials");
+    }
+        const isPasswordValid=await bcrypt.compare(password,user.password);
+        if(isPasswordValid){
+            res.send("User Loggedin successfully");
+        }else{
+            throw new Error("Invalid Cridentials");
+        }
+
+    }catch(err){
+        res.status(400).send("Error: "+err.message);
+
+    }
 
 });
 

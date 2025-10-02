@@ -8,8 +8,6 @@ const User=require("../models/user.js");
 const authRouter=express.Router();
 
 authRouter.post("/signup",async (req,res)=>{
-
-   
     try{
         //validate data
         validateSignupDate(req);

@@ -2,8 +2,6 @@ const express=require("express");
 const {connectDB}=require("./config/database.js");
 const cookieParser=require("cookie-parser");
 
-
-
 const app=express();
 
 
@@ -26,7 +24,7 @@ app.use("/",userRouter);
 
 connectDB().then(()=>{
     console.log("database connection is established");  
-    app.listen(3000,()=>{
+    app.listen(7777,()=>{
     console.log("Server is listen on the port 3000");
 })
 }).catch(err=>{
